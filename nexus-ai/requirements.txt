@@ -1,0 +1,10 @@
+fastapi
+uvicorn[standard]
+sqlalchemy
+psycopg2-binary
+python-dotenv
+pydantic
+pydantic-settings
+
+Root endpoint (http://localhost:8000/): ✅ {"message":"Nexus API","status":"running"}
+Health endpoint (http://localhost:8000/health): ✅ {"status":"healthy"}
