@@ -224,3 +224,4 @@ Do I need the following or not?
 ## Test it
 cd "e:\1.CodeProjects\AI Agent Assistant\nexus-ai"
 python -m uvicorn main:app --reload
+pws na testarw swsta ta endpoints?
