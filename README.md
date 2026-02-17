@@ -394,12 +394,17 @@ Each ticket stores the `model_version` used for classification, enabling:
 - 🔄 AI observability metrics
 
 ### 📋 Todo
-- 🔲 Agent orchestration with tool calling
-- 🔲 State management across requests
-- 🔲 Cost optimization strategies
-- 🔲 Load testing & performance tuning
-- 🔲 Docker containerization
-
+- Agent orchestration with tool calling
+- State management across requests
+- Cost optimization strategies
+- Load testing & performance tuning
+- Docker containerization
+- Human-in-the-Loop (HITL) Workflow
+- LLM Security (Prompt Injection Defense)
+- Caching Strategy (Redis architecture)
+- Feedback Loop & Model Improvement
+- Data Privacy & Compliance (GDPR, PII masking)
+- Async Processing (message queues, workers)
 ---
 
 ## 📊 Data Flow
