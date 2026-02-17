@@ -8,6 +8,9 @@ import json
 import re
 from typing import Dict, Any
 from app.app.schemas import AIClassification
+from app.app.logger import get_logger
+
+logger = get_logger(__name__)
 
 
 class AIService:
@@ -55,41 +58,54 @@ class AIService:
         Returns:
             Dictionary with classification results and raw response
         """
-        message_lower = user_message.lower()
+        logger.info(f"Classifying ticket with message length: {len(user_message)}")
         
-        # Classify category
-        category = self._classify_category(message_lower)
-        
-        # Classify urgency
-        urgency = self._classify_urgency(message_lower)
-        
-        # Detect sentiment
-        sentiment = self._detect_sentiment(message_lower)
-        
-        # Calculate confidence (mock - based on message length and keyword matches)
-        confidence = self._calculate_confidence(message_lower, category, urgency, sentiment)
-        
-        # Create classification result
-        classification = AIClassification(
-            category=category,
-            urgency=urgency,
-            sentiment=sentiment,
-            confidence=confidence
-        )
-        
-        # Mock raw AI response (simulating structured output)
-        raw_response = {
-            "model": self.model_version,
-            "classification": classification.model_dump(),
-            "reasoning": f"Classified as {category} with {urgency} urgency based on content analysis",
-            "mock": True  # Indicator that this is mock data
-        }
-        
-        return {
-            "classification": classification,
-            "raw_response": json.dumps(raw_response),
-            "model_version": self.model_version
-        }
+        try:
+            message_lower = user_message.lower()
+            
+            # Classify category
+            category = self._classify_category(message_lower)
+            logger.debug(f"Classified category: {category}")
+            
+            # Classify urgency
+            urgency = self._classify_urgency(message_lower)
+            logger.debug(f"Classified urgency: {urgency}")
+            
+            # Detect sentiment
+            sentiment = self._detect_sentiment(message_lower)
+            logger.debug(f"Detected sentiment: {sentiment}")
+            
+            # Calculate confidence (mock - based on message length and keyword matches)
+            confidence = self._calculate_confidence(message_lower, category, urgency, sentiment)
+            logger.debug(f"Calculated confidence: {confidence}")
+            
+            # Create classification result
+            classification = AIClassification(
+                category=category,
+                urgency=urgency,
+                sentiment=sentiment,
+                confidence=confidence
+            )
+            
+            # Mock raw AI response (simulating structured output)
+            raw_response = {
+                "model": self.model_version,
+                "classification": classification.model_dump(),
+                "reasoning": f"Classified as {category} with {urgency} urgency based on content analysis",
+                "mock": True  # Indicator that this is mock data
+            }
+            
+            logger.info(f"Successfully classified ticket: {category} / {urgency} / {sentiment} (confidence: {confidence:.2f})")
+            
+            return {
+                "classification": classification,
+                "raw_response": json.dumps(raw_response),
+                "model_version": self.model_version
+            }
+            
+        except Exception as e:
+            logger.error(f"Error during ticket classification: {str(e)}", exc_info=True)
+            raise Exception(f"AI classification failed: {str(e)}")
     
     def _classify_category(self, message: str) -> str:
         """Classify message category based on keywords"""

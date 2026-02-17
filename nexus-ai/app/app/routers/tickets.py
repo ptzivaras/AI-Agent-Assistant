@@ -20,8 +20,9 @@ from app.app.crud import (
     get_tickets_count,
     get_tickets_stats
 )
+from app.app.logger import get_logger
 
-
+logger = get_logger(__name__)
 router = APIRouter(prefix="/tickets", tags=["tickets"])
 
 
@@ -52,6 +53,8 @@ async def create_new_ticket(
     ```
     """
     try:
+        logger.info(f"Creating new ticket with message length: {len(ticket_data.user_message)}")
+        
         # Call AI service for classification
         ai_service = AIService()
         ai_result = await ai_service.classify_ticket(ticket_data.user_message)
@@ -65,9 +68,11 @@ async def create_new_ticket(
             model_version=ai_result["model_version"]
         )
         
+        logger.info(f"Ticket created successfully with ID: {db_ticket.id}, Category: {db_ticket.category}")
         return db_ticket
         
     except Exception as e:
+        logger.error(f"Failed to create ticket: {str(e)}", exc_info=True)
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail=f"Failed to create ticket: {str(e)}"
@@ -99,6 +104,8 @@ async def list_tickets(
     - **skip**: Number of records to skip (for pagination)
     - **limit**: Maximum records to return (1-100)
     """
+    logger.info(f"Listing tickets with filters - category: {category}, urgency: {urgency}, min_confidence: {min_confidence}")
+    
     tickets = get_tickets(
         db=db,
         skip=skip,
@@ -136,6 +143,7 @@ async def ticket_statistics(db: Session = Depends(get_db)):
     - Count grouped by urgency level
     - Average AI confidence score
     """
+    logger.info("Fetching ticket statistics")
     stats = get_tickets_stats(db)
     
     return TicketStatsResponse(
@@ -165,9 +173,11 @@ async def get_ticket_by_id(
     - Model version used
     - Creation timestamp
     """
+    logger.info(f"Fetching ticket with ID: {ticket_id}")
     ticket = get_ticket(db, ticket_id)
     
     if not ticket:
+        logger.warning(f"Ticket not found: {ticket_id}")
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
             detail=f"Ticket with ID {ticket_id} not found"
