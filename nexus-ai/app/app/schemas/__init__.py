@@ -1,6 +1,18 @@
 """
 Pydantic schemas for Nexus AI
 """
-from .ticket import TicketCreate, TicketResponse, AIClassification
+from .ticket import (
+    TicketCreate, 
+    TicketResponse, 
+    AIClassification,
+    TicketListResponse,
+    TicketStatsResponse
+)
 
-__all__ = ["TicketCreate", "TicketResponse", "AIClassification"]
+__all__ = [
+    "TicketCreate", 
+    "TicketResponse", 
+    "AIClassification",
+    "TicketListResponse",
+    "TicketStatsResponse"
+]
