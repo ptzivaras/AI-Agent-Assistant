@@ -1,7 +1,23 @@
-# AI FastAPI Project
-Σε συνεχη σκεψη τι να φτιαξω γιατι πως να ειναι ΤΟΠ επιπεδο και να μαθω κατι ουσιαστικο! Κανω μελετη καιρο τωρα τι και πως! Θα κανω σιγουρα Version1 και Version 2 και πιο μετα τα αλλα.
+# AI-powered support ticket system
+What problem it solves? In a real company too many emails are sent everyday so use categorise emails automatically and sent them in different departments based on the context(crital to managers, billing to logistics, technical to developers?)
+1. Διαβάζεις ένα μήνυμα (π.χ. πρόβλημα πελάτη)
+2. Το AI αναλύει το μήνυμα
+3. Κατηγοριοποιεί αυτόματα σε:
+- Category (Technical Issue, Billing, Feature Request, κλπ)
+- Urgency (Low, Medium, High, Critical)
+- Sentiment (Positive, Neutral, Negative)
+- Confidence (πόσο σίγουρο είναι το AI - 0-100%)
 
-Nexus-ai is an AI Assistant Agent that Connects FastApi Postgres and AI!!
+## Πώς το χρησιμοποιείς;
+1. Γράψε ένα ticket στο αριστερό box:
+Παράδειγμα:  URGENT! Our production server crashed and 1000 customers can't access the website! Need immediate help!
+2. Πάτα "🚀 Submit & Classify"
+3. Το AI αναλύει & δείχνει:
+- Category → π.χ. "Technical Issue"
+- Urgency → π.χ. "Critical" (κόκκινο badge)
+- Sentiment → π.χ. "Negative" (frustrated customer)
+- Confidence → π.χ. 92% (πόσο σίγουρο είναι)
+- Model → "Groq/llama-3.1-8b-instant" (ποιο AI μοντέλο χρησιμοποίησε)
 
 ## Technology
 Postgres
