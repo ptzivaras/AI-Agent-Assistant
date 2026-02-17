@@ -1,243 +1,557 @@
-# AI-powered support ticket system
-What problem it solves? In a real company too many emails are sent everyday so use categorise emails automatically and sent them in different departments based on the context(crital to managers, billing to logistics, technical to developers?)
-1. Διαβάζεις ένα μήνυμα (π.χ. πρόβλημα πελάτη)
-2. Το AI αναλύει το μήνυμα
-3. Κατηγοριοποιεί αυτόματα σε:
-- Category (Technical Issue, Billing, Feature Request, κλπ)
-- Urgency (Low, Medium, High, Critical)
-- Sentiment (Positive, Neutral, Negative)
-- Confidence (πόσο σίγουρο είναι το AI - 0-100%)
+# 🤖 Nexus AI - Intelligent Ticket Classification System
 
-## Πώς το χρησιμοποιείς;
-1. Γράψε ένα ticket στο αριστερό box:
-Παράδειγμα:  URGENT! Our production server crashed and 1000 customers can't access the website! Need immediate help!
-2. Πάτα "🚀 Submit & Classify"
-3. Το AI αναλύει & δείχνει:
-- Category → π.χ. "Technical Issue"
-- Urgency → π.χ. "Critical" (κόκκινο badge)
-- Sentiment → π.χ. "Negative" (frustrated customer)
-- Confidence → π.χ. 92% (πόσο σίγουρο είναι)
-- Model → "Groq/llama-3.1-8b-instant" (ποιο AI μοντέλο χρησιμοποίησε)
+AI-powered support ticket system that automatically categorizes, prioritizes, and analyzes customer support messages using real-time AI classification.
 
-## Technology
-Postgres
-Maybe React
-FastApi(Python v 3.12"stable")
+## 📸 Screenshots
 
-## Features:
-🔹DashBoard(React-Axios-Table view)
--Δείχνει tickets
--Φιλτράρει ανά category
--Δείχνει similarity matches
-This will be very simple not UI Awesome!
-🔹Add BackEnd..
+### Frontend Dashboard
+![Frontend UI](01.png)
 
-## Done
-Basic FastApi setup (main.py, requirements.txt)
-PostgreSQL connection
-Simple AI endpoint(mock response)
-start doing features
+### API Documentation
+![FastAPI Docs](02.png)
 
-## Versions & DeadLines 
-### Each time i apply different concepts from AI agent Theory in project.
-Version 1: AI Classification
-(User στέλνει πρόβλημα → AI επιστρέφει structured JSON → Αποθήκευση στο DB.)
--API Endpoints
+---
+
+## 🎯 Problem Statement
+
+In real companies, **thousands of emails arrive daily**. Manual sorting is time-consuming and error-prone. This system:
+- ✅ **Automatically categorizes** tickets (Technical, Billing, Feature Request, etc.)
+- ✅ **Prioritizes urgency** (Critical → High → Medium → Low)
+- ✅ **Analyzes sentiment** (Positive, Neutral, Negative)
+- ✅ **Routes to correct teams** (Critical → Managers, Billing → Finance, Technical → Developers)
+
+---
+
+## 🚀 How It Works
+
+1. **User submits** a support message (e.g., "URGENT! Server is down!")
+2. **AI analyzes** the message using Groq/OpenAI
+3. **System classifies** automatically:
+   - **Category**: Technical Issue, Billing, Feature Request, Account, Bug Report, General Inquiry
+   - **Urgency**: Low, Medium, High, Critical
+   - **Sentiment**: Positive, Neutral, Negative
+   - **Confidence**: 0-100% (how sure the AI is)
+4. **Results saved** to database with full classification metadata
+
+---
+
+## 🛠️ Technology Stack
+
+### Backend
+- **FastAPI** - Modern Python web framework
+- **Python 3.14** - Latest stable version
+- **SQLAlchemy** - ORM for database management
+- **Pydantic** - Data validation with type hints
+- **SQLite** - Development database (PostgreSQL-ready)
+
+### AI Layer
+- **Groq API** - FREE ultra-fast LLM inference (llama-3.1-8b-instant)
+- **OpenAI API** - Alternative provider support (gpt-3.5-turbo)
+- **Structured Output** - JSON-validated AI responses
+
+### Frontend
+- **React 18** - Modern UI library (via CDN)
+- **Vanilla CSS** - Custom gradient design
+- **Babel Standalone** - In-browser JSX compilation
+- **No build step required** - Direct browser usage
+
+---
+
+## ✨ Current Features
+
+### ✅ Version 1: Mock AI System
+- Basic FastAPI setup with clean architecture
+- Mock keyword-based classifier (no API keys needed)
+- PostgreSQL-compatible database schema
+- CRUD operations (Create, Read, List, Statistics)
+- Logging & error handling
+
+### ✅ Version 2: Real AI Integration
+- **Groq API integration** (FREE & ultra-fast)
+- **OpenAI API support** (gpt-3.5-turbo)
+- Provider switching via environment variable
+- Automatic JSON extraction from AI responses
+- Confidence scoring & model version tracking
+- Configuration management with pydantic-settings
+
+### ✅ React Frontend
+- Beautiful gradient purple theme
+- Real-time ticket submission & classification
+- Live statistics dashboard
+- Ticket history with color-coded badges
+- Responsive design (mobile & desktop)
+- No npm/build required - pure CDN
+
+---
+
+## 📂 Project Structure
+
+```
+AI-Agent-Assistant/
+├── nexus-ai/                    # Backend (FastAPI)
+│   ├── app/
+│   │   ├── models/              # SQLAlchemy models
+│   │   ├── schemas/             # Pydantic validation
+│   │   ├── services/            # Business logic (AI service)
+│   │   ├── crud/                # Database operations
+│   │   ├── routers/             # API endpoints
+│   │   ├── logger.py            # Logging configuration
+│   │   ├── config.py            # Settings management
+│   │   └── database.py          # DB connection
+│   ├── main.py                  # FastAPI app entry
+│   ├── requirements.txt         # Python dependencies
+│   └── .env                     # Configuration (API keys)
+│
+├── frontend/                    # React UI
+│   ├── index.html               # Main HTML file
+│   ├── app.jsx                  # React components
+│   ├── style.css                # Gradient design
+│   └── README.md                # Frontend docs
+│
+├── 01.png                       # Screenshot: Frontend UI
+├── 02.png                       # Screenshot: API Docs
+└── README.md                    # This file
+```
+
+---
+
+## 🚀 Quick Start
+
+### Prerequisites
+- Python 3.12+ installed
+- Groq API key (FREE from https://groq.com)
+
+### Backend Setup
+
+1. **Navigate to backend folder:**
+```bash
+cd nexus-ai
+```
+
+2. **Create virtual environment:**
+```bash
+python -m venv venv
+venv\Scripts\activate  # Windows
+source venv/bin/activate  # Mac/Linux
+```
+
+3. **Install dependencies:**
+```bash
+pip install -r requirements.txt
+```
+
+4. **Configure environment (.env):**
+```env
+# AI Provider (groq or openai)
+AI_PROVIDER=groq
+
+# Groq API Key (FREE - get from https://groq.com)
+GROQ_API_KEY=your-groq-key-here
+GROQ_MODEL=llama-3.1-8b-instant
+
+# Database
+DATABASE_URL=sqlite:///./nexus.db
+```
+
+5. **Start backend server:**
+```bash
+uvicorn main:app --reload --port 8001
+```
+
+Backend running at: **http://localhost:8001**
+
+### Frontend Setup
+
+1. **Navigate to frontend folder:**
+```bash
+cd frontend
+```
+
+2. **Start HTTP server:**
+```bash
+python -m http.server 8080
+```
+
+Frontend running at: **http://localhost:8080**
+
+---
+
+## 🧪 Testing the System
+
+### Example 1: Critical Technical Issue
+**Input:**
+```
+URGENT! Our production server crashed and 1000 customers can't access the website! Need immediate help!
+```
+
+**Expected Output:**
+- Category: `Technical Issue`
+- Urgency: `Critical` (red badge)
+- Sentiment: `Negative`
+- Confidence: `~92%`
+
+### Example 2: Billing Question
+**Input:**
+```
+Hi, I was charged twice for my subscription last month. Can you please refund one charge? Thanks!
+```
+
+**Expected Output:**
+- Category: `Billing`
+- Urgency: `Medium`
+- Sentiment: `Neutral`
+- Confidence: `~87%`
+
+### Example 3: Feature Request
+**Input:**
+```
+It would be amazing if you could add dark mode to the app! I use it at night and it's too bright.
+```
+
+**Expected Output:**
+- Category: `Feature Request`
+- Urgency: `Low`
+- Sentiment: `Positive`
+- Confidence: `~95%`
+
+---
+
+## 📡 API Endpoints
+
+### Create Ticket
+```http
 POST /tickets
-GET /tickets
+Content-Type: application/json
+
+{
+  "user_message": "Your support message here (min 10 chars)"
+}
+```
+
+### List All Tickets
+```http
+GET /tickets?page=1&page_size=10&category=Technical%20Issue&urgency=Critical
+```
+
+### Get Specific Ticket
+```http
 GET /tickets/{id}
--AI Layer
-Prompt template
-JSON structured output
-Validation (Pydantic)
-Retry on invalid JSON
-Confidence score
--Database
-Table: tickets
---id
---user_message
---category
---urgency
---sentiment
---confidence
---ai_raw_response
---model_version
---created_at
--Engineering Features
-Logging prompt + response
-Error handling
-Async LLM call
-Clean architecture (router → service → repository)
-(Ερωτησεις που θα κανω στον εαυτο μου)
-1. Ξέρεις structured extraction με σωστο τροπο η την εκανα λαθος εδω γιατι?
-2. Ειναι αυτο το AI σε production-like flow η οχι?
-3. Εμπιστεύετηκα τυφλά το LLM η οχι?
+```
 
-Version 2: Database Integration
-(Ερωτησεις που θα κανω στον εαυτο μου)
-Ειναι διαφορετικο αυτο για ΑΙ η το ιδιο οπως παντα?
+### Get Statistics
+```http
+GET /tickets/stats
+```
 
-Feature 3: RAG Implementation(AI + RAG)
--- Νέα Features
-Embeddings
-Δημιουργία embedding για κάθε ticket
-Αποθήκευση σε pgvector
-Similarity Search
-Όταν έρχεται νέο ticket:
-βρίσκεις 3 παρόμοια
-τα βάζεις στο prompt
-Context Injection
-Prompt:
-“Based on similar past issues: …”
-Database
-Νέος πίνακας:
-ticket_embeddings
-vector column
-Endpoint
-POST /tickets/with-context
+**Interactive API Docs:** http://localhost:8001/docs
 
-(Ερωτησεις που θα κανω στον εαυτο μου)
-Καταλαβαίνεις RAG σωστα η οχι?
-Ξέρω embeddings πλεον η οχι? μηπως δεν τα κανω σωστα?
-Ξέρεις vector search η οχι με το σωστο τροπο?
-Ξέρεις knowledge grounding η οχι με το σωστο τροπο?
+---
 
-Version 4? vasika 3 einai  alla exw san 2 to DB integration
--- Νέα Features
-Tool Definitions
-get_similar_tickets
-assign_priority
-escalate_ticket
-Agent Loop
-LLM decides tool
-Backend executes
-Returns result
-LLM continues reasoning
-Conversation State
-session table
-message history
-Guardrails
-Strict JSON schema
-Allowed categories only
-Output validation
-Cost Monitoring
-Token usage logging
-Model usage stats endpoint
+## 📊 Database Schema
 
-(Ερωτησεις που θα κανω στον εαυτο μου αν τα ξερω καλα η οχι)
-Agent orchestration
-Tool calling
-State machine thinking
-Production AI backend
+### Tickets Table
+```sql
+CREATE TABLE tickets (
+    id              INTEGER PRIMARY KEY,
+    user_message    TEXT NOT NULL,
+    category        VARCHAR(50),
+    urgency         VARCHAR(20),
+    sentiment       VARCHAR(20),
+    confidence      FLOAT,
+    ai_raw_response TEXT,
+    model_version   VARCHAR(100),
+    created_at      TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+```
 
-## AI Flow
-Client → FastAPI Router → Service Layer → AI Service
-                                    ↓
-                                PostgreSQL
-                                    ↓
-                                pgvector
+---
 
-## Files
+## 🎯 Version Roadmap
 
-## URLs
-Frontend: http://localhost:8000
-API Docs: http://localhost:8000/docs
-Health Check: http://localhost:8000/health
+### ✅ Version 1: Mock AI System (DONE)
+**Goal:** Build foundation without external APIs
 
-## Check if these are in project
-Clean architecture
-DTO separation
-Logging strategy
-Validation layer
-RAG pipeline explanation
-Error handling
-Dockerized setup
-README με architecture diagram
+**Key Learnings:**
+- ✅ Structured JSON extraction
+- ✅ Clean architecture (router → service → crud)
+- ✅ Production-like flow
+- ✅ Validation & error handling
 
-## Todo for production enviroment(from what i can understand for now...)
+### ✅ Version 2: Real AI Integration (DONE)
+**Goal:** Replace mock with real LLM APIs
+
+**Key Learnings:**
+- ✅ Multiple provider support (Groq + OpenAI)
+- ✅ Configuration management
+- ✅ JSON parsing strategies
+- ✅ Confidence scoring
+
+### 🔜 Version 3: RAG Implementation
+**Goal:** Context-aware classification using similar past tickets
+
+**Planned Features:**
+- Generate embeddings for each ticket
+- Store vectors in pgvector
+- Similarity search (find 3 most similar tickets)
+- Context injection into AI prompt
+- New endpoint: `POST /tickets/with-context`
+
+**Questions to Validate:**
+- Do I understand RAG correctly?
+- Do I implement embeddings properly?
+- Is vector search done right?
+- Do I understand knowledge grounding?
+
+### 🔜 Version 4: Agent Orchestration
+**Goal:** Multi-step reasoning with tool calling
+
+**Planned Features:**
+- Tool definitions (`get_similar_tickets`, `assign_priority`, `escalate_ticket`)
+- Agent loop (LLM decides → Backend executes → Result → Continue)
+- Conversation state management
+- Guardrails (strict validation, allowed categories only)
+- Cost monitoring (token usage logging)
+
+**Questions to Validate:**
+- Do I understand agent orchestration?
+- Is tool calling implemented correctly?
+- Do I handle state properly?
+- Is this production-ready?
+
+---
+
+## 🔒 Production Considerations
+
 ### Guardrails (Safety Layer)
-Στο version1 πρέπει να έχω:
-1. Strict JSON schema validation
-Pydantic model
-Αν αποτύχει → retry LLM call
-Αν αποτύχει 2 φορές → fallback response
-2. Allowed categories list 
-Π.Χ ALLOWED_CATEGORIES = ["Hardware", "Software", "Billing"]
-Αν LLM επιστρέψει: "Networking" → reject → retry with clarification prompt.
 
-Στο version2 μπορείς να προσθέσεις:
-Confidence threshold (π.χ. < 0.6 → flag for manual review)
-Basic hallucination guard:
-Αν category δεν υπάρχει στο DB → reject
-Input length limits
-Basic rate limiting
+**Version 1 (Essential):**
+- ✅ Strict JSON schema validation (Pydantic)
+- ✅ Retry logic for failed LLM calls
+- ✅ Allowed categories list validation
+- ✅ Input length limits
+- ✅ Basic rate limiting
 
-Στο version3 (serious level):
-Output schema enforced via JSON mode
-Content filtering
-Moderation check
-Rule-based override layer
+**Version 2 (Recommended):**
+- Confidence threshold (< 0.6 → manual review)
+- Hallucination guard (reject invalid categories)
+- Content filtering
+- Moderation API check
+
+**Version 3 (Advanced):**
+- Output schema enforcement
+- Rule-based override layer
+- Multi-model consensus
+- Human-in-the-loop for edge cases
 
 ### Cost Monitoring
-Στο version1:
-Απλά αποθήκευσε:
--model_name
--prompt_tokens
--completion_tokens
--total_tokens
--request_time_ms
-Αυτά τα παίρνεις από το LLM API response.
 
-Κάνε έναν πίνακα:
-ai_usage_logs
-- id
-- ticket_id
-- model
-- prompt_tokens
-- completion_tokens
-- total_tokens
-- cost_estimate
-- created_at
+**Current Implementation:**
+- Model name tracking
+- Token usage logging
+- Request timing
+- Provider selection
 
-Στο v2:
-ndpoint: /metrics/usage
-Συνολικό token usage
-Cost estimate ανά ημέρα
+**Planned:**
+```sql
+CREATE TABLE ai_usage_logs (
+    id              INTEGER PRIMARY KEY,
+    ticket_id       INTEGER,
+    model           VARCHAR(100),
+    prompt_tokens   INTEGER,
+    completion_tokens INTEGER,
+    total_tokens    INTEGER,
+    cost_estimate   FLOAT,
+    created_at      TIMESTAMP
+);
+```
 
-Στο v3:
-Rate limiting per user
-Max tokens per request
-Cost alert threshold
+**Future Endpoints:**
+- `GET /metrics/usage` - Total token usage
+- `GET /metrics/cost` - Cost estimates per day
+- `GET /metrics/performance` - Classification accuracy
 
 ### Prompt Versioning
-Αυτό είναι advanced αλλά όχι δύσκολο.
-Μην κάνεις hardcode prompt string μέσα στον service.
 
-Table: prompt_templates
-- id
-- name
-- version
-- template_text
-- created_at
-- is_active
+**Strategy:**
+```sql
+CREATE TABLE prompt_templates (
+    id              INTEGER PRIMARY KEY,
+    name            VARCHAR(100),
+    version         VARCHAR(20),
+    template_text   TEXT,
+    created_at      TIMESTAMP,
+    is_active       BOOLEAN
+);
+```
 
-Και στον ticket:
-- prompt_version
+**Benefits:**
+- A/B testing different prompts
+- Track which version performs better
+- Rollback to previous versions
+- Measure improvement over time
 
-Έτσι μπορείς να πεις: “Version 2 improved urgency detection by 18%”
+---
 
-## Engineering Decisions
-Why structured JSON instead of free text?
-Why pgvector instead of external vector DB?
-Why retry logic limited to 2 attempts?
-Why versioned prompts?
-Do I need the following or not?
--Idempotency
--Failure modes
--LLM timeout handling
--Rate limiting strategy
+## 🏗️ Architecture & Design
 
-## Test it
-cd "e:\1.CodeProjects\AI Agent Assistant\nexus-ai"
-python -m uvicorn main:app --reload
-pws na testarw swsta ta endpoints?
+### Clean Architecture Layers
+
+```
+┌─────────────────────────────────────┐
+│         API Layer (Router)          │  ← FastAPI endpoints
+├─────────────────────────────────────┤
+│       Service Layer (Logic)         │  ← AI classification
+├─────────────────────────────────────┤
+│       CRUD Layer (Database)         │  ← SQLAlchemy queries
+├─────────────────────────────────────┤
+│        Data Layer (Models)          │  ← DB schema
+└─────────────────────────────────────┘
+```
+
+### Data Flow
+
+```
+Client Request
+     ↓
+FastAPI Router (validates input)
+     ↓
+Service Layer (calls AI API)
+     ↓
+AI Provider (Groq/OpenAI)
+     ↓
+Response Parsing (extract JSON)
+     ↓
+CRUD Layer (save to database)
+     ↓
+Response to Client
+```
+
+---
+
+## 🧪 Testing Strategy
+
+### Current Status
+- ✅ Manual testing via frontend
+- ✅ API testing via FastAPI Docs (/docs)
+- ✅ PowerShell integration tests
+
+### Planned
+- [ ] **Unit Tests** (pytest)
+  - Test AI service mock
+  - Test CRUD operations
+  - Test schema validation
+- [ ] **Integration Tests**
+  - Test full API flow
+  - Test database operations
+  - Test AI provider switching
+- [ ] **Load Tests**
+  - Concurrent request handling
+  - Token rate limiting
+  - Database performance
+
+---
+
+## 🐳 Docker Setup (Planned)
+
+### Planned Structure
+```yaml
+version: '3.8'
+services:
+  backend:
+    build: ./nexus-ai
+    ports:
+      - "8001:8001"
+    environment:
+      - AI_PROVIDER=groq
+      - GROQ_API_KEY=${GROQ_API_KEY}
+    volumes:
+      - ./nexus.db:/app/nexus.db
+  
+  frontend:
+    image: nginx:alpine
+    ports:
+      - "8080:80"
+    volumes:
+      - ./frontend:/usr/share/nginx/html
+```
+
+---
+
+## 📚 Learning Objectives
+
+This project is built as a learning exercise to master:
+
+### ✅ Completed
+- Structured output extraction
+- Multi-provider AI integration
+- Clean architecture patterns
+- RESTful API design
+- React frontend basics
+- Configuration management
+
+### 🔄 In Progress
+- RAG implementation
+- Vector embeddings
+- Semantic search
+- Production guardrails
+
+### 🔜 Next
+- Agent orchestration
+- Tool calling patterns
+- State management
+- Cost optimization
+
+---
+
+## 🤔 Engineering Questions to Validate
+
+### Structured Extraction
+- ✅ Do I validate JSON properly?
+- ✅ Do I handle parsing failures gracefully?
+- ✅ Is my schema flexible enough?
+
+### Production Readiness
+- ✅ Is error handling comprehensive?
+- ✅ Are logs actionable?
+- ⏳ Is rate limiting implemented?
+- ⏳ Are costs tracked?
+
+### AI Safety
+- ✅ Do I validate LLM outputs?
+- ⏳ Do I have hallucination guards?
+- ⏳ Is confidence calibrated?
+- ⏳ Human-in-the-loop for low confidence?
+
+---
+
+## 📝 URLs & Links
+
+- **Frontend:** http://localhost:8080
+- **Backend API:** http://localhost:8001
+- **API Docs:** http://localhost:8001/docs
+- **Health Check:** http://localhost:8001/health
+
+---
+
+## 🤝 Contributing
+
+This is a personal learning project, but suggestions are welcome!
+
+---
+
+## 📄 License
+
+MIT License - Feel free to use for learning purposes.
+
+---
+
+## 🙏 Acknowledgments
+
+- **Groq** - For providing FREE ultra-fast LLM inference
+- **FastAPI** - Amazing Python web framework
+- **React** - Frontend library
+- **Llama 3.1** - Open source LLM model
+
+---
+
+**Built with ❤️ as a learning project to master AI agent development**
